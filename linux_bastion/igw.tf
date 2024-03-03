@@ -1,5 +1,3 @@
-variable "bastion_cidrs" {}
-
 resource "aws_internet_gateway" "igw" {
   vpc_id = module.vpc.id
 }

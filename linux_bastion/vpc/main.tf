@@ -1,7 +1,7 @@
-variable "cidrs" {}
+variable "cidr" {}
 
 resource "aws_vpc" "main" {
-  cidr_block = var.cidrs
+  cidr_block = var.cidr
 }
 
 output "id" {

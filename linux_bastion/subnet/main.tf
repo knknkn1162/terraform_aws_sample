@@ -1,4 +1,4 @@
-variable "cidrs" {
+variable "cidr" {
 }
 
 variable "vpc_id" {
@@ -6,7 +6,7 @@ variable "vpc_id" {
 
 resource "aws_subnet" "example" {
   vpc_id     = var.vpc_id
-  cidr_block = var.cidrs
+  cidr_block = var.cidr
 }
 
 output "id" {
