@@ -1,15 +1,15 @@
 variable "vpc_cidrs" {
 }
 
-variable "subnet_cidrs" {}
+variable "vm_cidrs" {}
 
 module "vpc" {
   source = "./vpc"
   cidrs = var.vpc_cidrs
 }
 
-module "subnet" {
+module "subnet4vm" {
   source = "./subnet"
-  cidrs = var.subnet_cidrs
+  cidrs = var.vm_cidrs
   vpc_id = module.vpc.id
 }

@@ -6,8 +6,10 @@ variable "cidrs" {
   type = list(string)
 }
 
+# https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateSecurityGroup.html
+# Constraints: Up to 255 characters in length. Cannot start with sg-.
 resource "aws_security_group" "default" {
-  name = "sg-${uuid()}"
+  name = "security-group-${uuid()}"
   vpc_id = var.vpc_id
 }
 
