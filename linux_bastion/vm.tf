@@ -5,6 +5,10 @@ variable "vm_cidr" {
   type = string
 }
 
+variable "vm_password" {
+  type = string
+}
+
 module "subnet4vm" {
   source = "./subnet"
   cidr = var.vm_cidr
@@ -14,7 +18,8 @@ module "subnet4vm" {
 module "vm" {
   source = "./vm"
   vpc_id = module.vpc.id
-  subnet_id = module.subnet4vm.id
+  vm_subnet_id = module.subnet4vm.id
+  natgw_subnet_id = module.subnet4public.id
   vm_spec = var.vm_spec
   vm_cidr = var.vm_cidr
 }

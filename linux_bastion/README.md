@@ -1,6 +1,16 @@
 # linux vm
 
-+ using session manager
++ using session manager -> bastion
+
++ `terraform output -raw ssh_privkey`
+```sh
+$ terraform output -raw ssh_privkey
+sh-5.2$ cd /home/ssm-user/
+sh-5.2$ vim key.pem # <- paste the result on `terraform output -raw ssh_privkey`
+sh-5.2$ chmod 0400 key.pem
+sh-5.2$ ssh -i ${ssh_command}
+[ec2-user@ip-10-0-2-215 ~]$ sudo yum update
+```
 
 ## When SSM Agent is not online
 The SSM Agent was unable to connect to a Systems Manager endpoint to register itself with the service.
