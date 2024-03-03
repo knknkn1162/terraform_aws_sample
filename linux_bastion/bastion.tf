@@ -5,14 +5,8 @@ variable "bastion_cidr" {
   type = string
 }
 
-
-data "aws_ami" "amzn-linux-2023-ami" {
-  most_recent = true
-  owners = ["amazon"]
-  filter {
-    name = "name"
-    values = ["al2023-ami-2023.*-x86_64"]
-  }
+module "ami4bastion" {
+  source = "./ami/amzn_linux_2023"
 }
 
 module "subnet4bastion" {
@@ -23,7 +17,7 @@ module "subnet4bastion" {
 
 module "bastion" {
   source = "./bastion"
-  ami = data.aws_ami.amzn-linux-2023-ami.id
+  ami = module.ami4bastion.id
   subnet_id = module.subnet4bastion.id
   vm_spec = var.bastion_spec
 }
