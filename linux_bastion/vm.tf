@@ -5,10 +5,6 @@ variable "vm_cidr" {
   type = string
 }
 
-variable "vm_password" {
-  type = string
-}
-
 module "subnet4vm" {
   source = "./subnet"
   cidr = var.vm_cidr
