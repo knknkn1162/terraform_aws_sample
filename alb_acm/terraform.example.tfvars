@@ -8,3 +8,6 @@ public2_cidr = "10.0.102.0/24"
 # prepare to issue by ACM in advance.
 prefix = "sub"
 domain = "your.domain"
+
+# must be unique
+s3_bucket = "***"

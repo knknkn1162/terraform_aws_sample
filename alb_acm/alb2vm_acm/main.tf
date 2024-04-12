@@ -14,6 +14,10 @@ variable "prefix" {
   type = string
 }
 
+variable "s3_id" {
+  type = string
+}
+
 data "aws_acm_certificate" "example" {
   domain    = "*.${var.domain}"
 }
@@ -41,6 +45,16 @@ resource "aws_lb" "example" {
   enable_deletion_protection = false
   # defaults to false
   # internal = false
+  access_logs {
+    bucket  = var.s3_id
+    prefix  = "access_logs"
+    enabled = true
+  }
+  connection_logs {
+    bucket  = var.s3_id
+    prefix  = "connection_logs"
+    enabled = true
+  }
 }
 
 # redirect

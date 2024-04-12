@@ -23,10 +23,11 @@ module "vm1" {
   sg_ids = [module.sg4vm.id]
   user_data = <<-EOF
 #!/bin/bash
-yum install -y httpd
-touch /var/www/html/index.html
-echo "This is the server" > /var/www/html/index.html
-systemctl enable httpd.service
-systemctl start httpd.service
+sudo yum update
+sudo yum install -y docker
+sudo systemctl enable docker.service
+sudo systemctl start docker.service
+sudo chmod 0666 /var/run/docker.sock
+docker run -d -p 80:80 kennethreitz/httpbin
 EOF
 }
