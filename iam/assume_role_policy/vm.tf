@@ -22,18 +22,23 @@ data "aws_iam_policy" "ssmManagedPolicy" {
   arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 /*
-data "aws_iam_policy_document" "override" {
+data "aws_iam_policy_document" "example" {
   statement {
 
     effect = "Allow"
     actions   = ["s3:*"]
     resources = ["*"]
-    principals {
-      
-    }
+    // principals {
+    //   
+    // }
     condition {
       
     }
   }
+}
+// use aws_iam_policy.example.arn
+resource "aws_iam_policy" "example" {
+  name = "sample"
+  policy = aws_iam_policy_document.example.json
 }
 */
