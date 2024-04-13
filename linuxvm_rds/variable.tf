@@ -2,16 +2,10 @@ variable "vpc_cidr" {
   type = string
 }
 
-variable "vm_spec" {
-  type = string
-}
-variable "vm_cidr" {
-  type = string
-}
-
 variable "bastion_spec" {
   type = string
 }
+
 variable "public_cidr" {
   type = string
 }
@@ -26,8 +20,4 @@ variable "db_name" {
 
 variable "db_password" {
   type = string
-}
-
-variable "db_instance_count" {
-  type = number
 }

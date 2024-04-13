@@ -29,6 +29,8 @@ resource "aws_rds_cluster" "example" {
   # port = ...
 }
 
+# aws_rds_cluster_instance is not necessary when engine_mode = serverless
+
 output "endpoint" {
   value = aws_rds_cluster.example.endpoint
 }
