@@ -27,6 +27,10 @@ resource "aws_rds_cluster" "example" {
   db_subnet_group_name = aws_db_subnet_group.example.name
   # Aurora Serverless currently doesn't support using a custom database port.
   # port = ...
+  # enable_http_endpoint - (Optional) Enable HTTP endpoint (data API). Only valid when engine_mode is set to serverless.
+  # To use the query editor for a database, the database must have the Data API enabled.
+  enable_http_endpoint = true
+
 }
 
 # aws_rds_cluster_instance is not necessary when engine_mode = serverless
