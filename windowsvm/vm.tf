@@ -8,14 +8,6 @@ data "local_file" "pfx" {
   filename = local.filepath
 }
 
-/*
-module "subnet4vm" {
-  source = "./subnet"
-  cidr = var.vm_cidr
-  vpc_id = module.vpc.id
-}
-*/
-
 resource "aws_security_group" "example" {
   vpc_id      = module.vpc.id
 }
@@ -45,9 +37,8 @@ module "vm" {
   source = "./vm"
   vpc_id = module.vpc.id
   vm_subnet_id = module.subnet4public.id
-  natgw_subnet_id = module.subnet4public.id
   vm_spec = var.vm_spec
-  vm_cidr = var.vm_cidr
+  vm_cidr = var.public_cidr
   security_group_ids = [aws_security_group.example.id]
   user_data = <<-EOF
 cd ("{0}/documents" -f $env:PUBLIC)

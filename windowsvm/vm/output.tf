@@ -6,7 +6,7 @@ output "ssh_command" {
 
 output "vm_user" {
   # see https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connect-to-linux-instance.html
-  value = "ec2-user"
+  value = "Administrator"
 }
 
 output "ssh_privkey" {

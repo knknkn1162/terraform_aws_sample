@@ -9,10 +9,6 @@ variable "vm_subnet_id" {
   type = string
 }
 
-variable "natgw_subnet_id" {
-  type = string
-}
-
 variable "vpc_id" {
   type = string
 }
