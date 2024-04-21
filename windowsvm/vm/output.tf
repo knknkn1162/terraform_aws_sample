@@ -13,10 +13,6 @@ output "ssh_privkey" {
   value = tls_private_key.pk.private_key_pem
 }
 
-output "natgw_public_ip" {
-  value = module.natgw.public_ip
-}
-
 output "id" {
   value = aws_instance.vm.id
 }

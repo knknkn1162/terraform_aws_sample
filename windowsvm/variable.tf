@@ -18,3 +18,6 @@ variable pfx_password {
 variable dns_prefix {
   type = string
 }
+variable "root_domain" {
+  type = string
+}

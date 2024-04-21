@@ -20,18 +20,19 @@ resource "aws_security_group" "example" {
   vpc_id      = module.vpc.id
 }
 
+
 module "egress" {
-  source = "./security_group/egress"
+  source = "./security_group/egress/all"
   security_group_id = aws_security_group.example.id
   is_any_cidr = true
-  ports = [443]
 }
+
 
 module "ingress" {
   source = "./security_group/ingress"
   security_group_id = aws_security_group.example.id
   is_any_cidr = true
-  ports = [443]
+  ports = [443, 3389]
 }
 
 # we don't have to use aws_eip_association because it's already associated with vm
@@ -52,14 +53,14 @@ module "vm" {
 cd ("{0}/documents" -f $env:PUBLIC)
 # import pfx
 $bytes = [System.Convert]::FromBase64String("${data.local_file.pfx.content_base64}")
-[System.IO.File]::WriteAllBytes("$pwd/${local.filename}", $Bytes)
+[System.IO.File]::WriteAllBytes("$pwd/${local.filename}", $bytes)
 $password = ConvertTo-SecureString -AsPlainText -Force "${var.pfx_password}"
 $cert = Import-PfxCertificate -FilePath "${local.filename}" -CertStoreLocation Cert:\LocalMachine\My -Password $password
 Import-module servermanager
 Add-WindowsFeature Web-Server -IncludeManagementTools -IncludeAllSubFeature
 Import-Module WebAdministration
 # bind pfx <-> var.dns_prefix.domain
-New-WebBinding -Name "${local.website_name}" -IP "*" -Port 443 -HostHeader "${var.dns_prefix}.cconscons.xyz" -Protocol https
+New-WebBinding -Name "${local.website_name}" -IP "*" -Port 443 -HostHeader "${var.dns_prefix}.${var.root_domain}" -Protocol https
 (Get-WebBinding -Name "${local.website_name}" -Protocol https).AddSslCertificate($cert.GetCertHashString(),"my")
 EOF
 }
