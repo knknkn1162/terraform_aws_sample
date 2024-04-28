@@ -11,6 +11,13 @@ resource "aws_api_gateway_method" "example" {
   rest_api_id   = var.rest_api_id
 }
 
+output "dependent_ids" {
+  value = [
+    aws_api_gateway_resource.example.id,
+    aws_api_gateway_method.example.id
+  ]
+}
+
 output "resource_id" {
   value = aws_api_gateway_resource.example.id
 }
@@ -21,4 +28,8 @@ output "http_method" {
 
 output "method_id" {
   value = aws_api_gateway_method.example.id
+}
+
+output "path" {
+  value = aws_api_gateway_resource.example.path
 }

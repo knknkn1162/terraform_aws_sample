@@ -1,23 +1,3 @@
-variable "rest_api_id" {
-  type = string
-}
-
-variable "resource_id" {
-  type = string
-}
-
-variable "http_method" {
-  type = string
-}
-
-variable "request_json" {
-  type = string
-}
-
-variable "response_json" {
-  type = string
-}
-
 resource "aws_api_gateway_integration" "mock" {
   http_method = var.http_method
   resource_id = var.resource_id
@@ -33,9 +13,14 @@ resource "aws_api_gateway_method_response" "response_200" {
   resource_id = var.resource_id
   http_method = aws_api_gateway_integration.mock.http_method
   status_code = "200"
+  // pass thru
+  response_models = {
+    // aws_api_gateway_model for custom model
+    "application/json" = "Empty"
+  }
 }
 
-resource "aws_api_gateway_integration_response" "MyDemoIntegrationResponse" {
+resource "aws_api_gateway_integration_response" "example" {
   rest_api_id = var.rest_api_id
   resource_id = var.resource_id
   http_method = aws_api_gateway_integration.mock.http_method
@@ -46,6 +31,10 @@ resource "aws_api_gateway_integration_response" "MyDemoIntegrationResponse" {
   }
 }
 
-output "integration_id" {
-  value = aws_api_gateway_integration.mock.id
+output "dependent_ids" {
+  value = [
+    aws_api_gateway_integration.mock.id,
+    aws_api_gateway_method_response.response_200.id,
+    aws_api_gateway_integration_response.example.id
+  ]
 }

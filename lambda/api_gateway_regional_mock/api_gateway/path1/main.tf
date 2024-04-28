@@ -23,14 +23,17 @@ module "backend" {
     statusCode = 200
   })
   response_json = jsonencode({
-    example = "value"
+    message = "OK"
   })
 }
 
 output "dependent_ids" {
-  value = [
-    module.path.resource_id,
-    module.path.method_id,
-    module.backend.integration_id
-  ]
+  value = concat(
+    module.path.dependent_ids,
+    module.backend.dependent_ids
+  )
+}
+
+output "path" {
+  value = module.path.path
 }

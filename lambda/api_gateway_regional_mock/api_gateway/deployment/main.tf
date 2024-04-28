@@ -18,3 +18,7 @@ resource "aws_api_gateway_stage" "example" {
 output "url" {
   value = aws_api_gateway_deployment.example.invoke_url
 }
+
+output "stage" {
+  value = aws_api_gateway_stage.example.stage_name
+}
