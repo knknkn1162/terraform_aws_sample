@@ -19,14 +19,9 @@ module "lambda" {
   handler = var.handler
   source_dir = var.source_dir
   subnet_ids = [module.subnet4lambda.id]
-  sg_ids = []
+  sg_ids = [aws_security_group.example.id]
   allow_policy_arns = [
     data.aws_iam_policy.AWSLambdaENIManagementAccess.arn,
     data.aws_iam_policy.AWSLambdaVPCAccessExecutionRole.arn
   ]
-}
-
-resource "aws_lambda_function_url" "test_latest" {
-  function_name      = module.lambda.func_name
-  authorization_type = "NONE"
 }

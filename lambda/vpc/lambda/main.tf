@@ -29,6 +29,25 @@ resource "aws_lambda_function" "example" {
   }
 }
 
+data "aws_network_interface" "example" {
+  filter {
+    name   = "interface-type"
+    values = ["lambda"]
+  }
+  filter {
+    name = "group-id"
+    values = [var.sg_ids[0]]
+  }
+
+  depends_on = [
+    aws_lambda_function.example
+  ]
+}
+
 output "func_name" {
   value = aws_lambda_function.example.function_name
+}
+
+output "private_ip" {
+  value = data.aws_network_interface.example.private_ip
 }
