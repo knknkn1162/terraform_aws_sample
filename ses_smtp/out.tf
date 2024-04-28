@@ -4,12 +4,10 @@ output "iam_username" {
 
 output "smtp_username" {
   value = module.smtp_user.smtp_username
+  sensitive = true
 }
 
 output "password" {
   value = module.smtp_user.password
-}
-
-output "" {
-  value = module.domain.
+  sensitive = true
 }
