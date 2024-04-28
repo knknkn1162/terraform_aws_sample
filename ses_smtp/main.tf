@@ -4,6 +4,7 @@ module "domain" {
   enable_verification = var.enable_verification
 }
 
-module "smtp_user" {
-  source = "./smtp_user"
+
+module "new_smtp_user" {
+  source = "./new_smtp_user"
 }
