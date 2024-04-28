@@ -13,6 +13,3 @@ variable "path" {
 variable "http_method" {
   type = string
 }
-variable "stage" {
-  type = string
-}

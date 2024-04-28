@@ -2,7 +2,7 @@ variable "rest_api_id" {
   type = string
 }
 
-variable "depends" {
+variable "triggers" {
   type = list(string)
 }
 
