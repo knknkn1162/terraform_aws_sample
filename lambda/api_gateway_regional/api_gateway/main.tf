@@ -1,7 +1,3 @@
-variable "stage" {
-  type = string
-}
-
 resource "aws_api_gateway_rest_api" "example" {
   name = "gateway-${uuid()}"
   endpoint_configuration {
