@@ -9,3 +9,7 @@ variable "runtime" {
 variable "source_dir" {
   type = string
 }
+
+variable "allow_policy_arns" {
+  type = list(string)
+}

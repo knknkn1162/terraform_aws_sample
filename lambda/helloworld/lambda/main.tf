@@ -1,15 +1,11 @@
-module "service" {
-  source = "../service"
-  services = ["lambda.amazonaws.com"]
-}
-
 locals {
  suffix = "${uuid()}"
 }
 
-resource "aws_iam_role" "example" {
-  name = "iam-role-${uuid()}"
-  assume_role_policy = module.service.json
+module "role4lambda" {
+  source = "../role4service"
+  services = ["lambda.amazonaws.com"]
+  allow_policy_arns = var.allow_policy_arns
 }
 
 module "src" {
@@ -23,7 +19,7 @@ resource "aws_lambda_function" "example" {
   #filename      = "lambda_function_payload.zip"
   function_name = "lambda-func-${local.suffix}"
   filename = module.src.path
-  role          = aws_iam_role.example.arn
+  role          = module.role4lambda.arn
   handler       = var.handler
   source_code_hash = module.src.base64sha256
   runtime = var.runtime
@@ -31,4 +27,12 @@ resource "aws_lambda_function" "example" {
 
 output "func_name" {
   value = aws_lambda_function.example.function_name
+}
+
+output "invoke_arn" {
+  value = aws_lambda_function.example.invoke_arn
+}
+
+output "arn" {
+  value = aws_lambda_function.example.arn
 }

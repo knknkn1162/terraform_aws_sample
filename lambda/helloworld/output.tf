@@ -4,5 +4,17 @@ output "test_result" {
 }
 
 output "url" {
-  value = aws_lambda_function_url.test_latest.function_url
+  value = [for k, v in aws_lambda_function_url.example: v.function_url]
+}
+
+output "arn" {
+  value = module.lambda.arn
+}
+
+output "invoke_arn" {
+  value = module.lambda.invoke_arn
+}
+
+output "func_name" {
+  value = module.lambda.func_name
 }
