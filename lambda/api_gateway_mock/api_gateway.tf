@@ -1,5 +1,6 @@
 module "api_gateway" {
   source = "./api_gateway"
+  is_edge = var.is_edge
 }
 
 module "path1" {
