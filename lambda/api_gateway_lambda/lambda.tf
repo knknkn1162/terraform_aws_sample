@@ -5,9 +5,9 @@ module "lambda" {
   runtime = "nodejs20.x"
 }
 
-# avoid "Invalid permissions on Lambda function" error
-module "trigger" {
-  source = "./api_gateway/trigger"
+module "lambda_trigger" {
+  source = "../helloworld/lambda/trigger"
   func_name = module.lambda.func_name
+  principal = "apigateway.amazonaws.com"
   exec_arn = module.deployment.exec_arn
 }
