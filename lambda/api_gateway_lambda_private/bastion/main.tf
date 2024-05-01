@@ -2,6 +2,11 @@ variable "subnet_id" {}
 variable "vm_spec" {}
 variable "ami" {}
 
+variable "user_data" {
+  type = string
+  default = ":"
+}
+
 locals {
   AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
@@ -16,6 +21,7 @@ resource "aws_instance" "bastion" {
   instance_type          = var.vm_spec
   iam_instance_profile   = aws_iam_instance_profile.bastion_profile.name
   subnet_id              = var.subnet_id
+  user_data = var.user_data
 }
 
 # create instance profile

@@ -9,3 +9,7 @@ variable "vpc_cidr" {
 variable "gateway_cidr" {
   type = string
 }
+
+variable "retry" {
+  type = number
+}

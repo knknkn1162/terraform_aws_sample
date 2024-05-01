@@ -36,3 +36,7 @@ output "invoke_arn" {
 output "arn" {
   value = aws_lambda_function.example.arn
 }
+
+output "id" {
+  value = aws_lambda_function.example.id
+}

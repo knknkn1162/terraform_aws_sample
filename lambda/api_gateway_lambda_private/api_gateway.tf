@@ -7,6 +7,8 @@ module "api_gateway" {
 module "policy" {
   source = "./api_gateway/policy"
   rest_api_id = module.api_gateway.rest_api_id
+  vpce_id = module.vpc_endpoint.id
+  exec_arn = module.deployment.exec_arn
 }
 
 module "path1" {
@@ -19,6 +21,9 @@ module "path1" {
 module "deployment" {
   source = "./api_gateway/deployment"
   rest_api_id = module.api_gateway.rest_api_id
-  triggers = module.path1.dependent_ids
+  triggers = concat(
+    module.path1.dependent_ids,
+    [module.policy.id]
+  )
   stage = var.stage
 }
