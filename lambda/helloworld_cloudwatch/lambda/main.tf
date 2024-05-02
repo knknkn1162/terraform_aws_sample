@@ -13,6 +13,11 @@ module "src" {
   source_dir = var.source_dir
 }
 
+resource "aws_cloudwatch_log_group" "example" {
+  name              = var.log_group_name
+  retention_in_days = 14
+}
+
 resource "aws_lambda_function" "example" {
   # If the file is not in the current working directory you will need to include a
   # path.module in the filename.
@@ -23,6 +28,11 @@ resource "aws_lambda_function" "example" {
   handler       = var.handler
   source_code_hash = module.src.base64sha256
   runtime = var.runtime
+  # Advanced logging controls (optional)
+  logging_config {
+    log_format = "Text"
+    log_group = aws_cloudwatch_log_group.example.name
+  }
 }
 
 output "func_name" {

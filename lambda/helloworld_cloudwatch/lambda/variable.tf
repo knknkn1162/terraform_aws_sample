@@ -13,3 +13,7 @@ variable "source_dir" {
 variable "allow_policy_arns" {
   type = list(string)
 }
+
+variable "log_group_name" {
+  type = string
+}

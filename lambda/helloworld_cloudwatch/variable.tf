@@ -24,3 +24,7 @@ variable "allow_gen_url" {
   type = bool
   default = false
 }
+
+variable "log_group_name" {
+  type = string
+}
