@@ -16,10 +16,12 @@ module "ingress" {
   cidr_ipv4 = var.target_cidr
 }
 
+/*
 module "egress" {
   source = "./egress/all"
   security_group_id = aws_security_group.example.id
 }
+*/
 
 output "id" {
   value = aws_security_group.example.id
