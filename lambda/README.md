@@ -11,6 +11,8 @@
       + 例1: lambda function内でS3を操作する
       + 例2: lambda functionにてlogをcloudwatchで生成する
       + 例3: lambda functionにてDynamoDBの操作を行う
+      + 例4: lambda functionにてSESを使ってメール送信する
+        + AmazonSESFullAccessなど
   + aws_lambda_function.logging_config
     + 遷移先のCloudwatchとの連携で使う
 + 連携サービスの権限付与
@@ -24,3 +26,6 @@
   + cloudwatch
     + 遷移先として
       + cloudwatch自体には権限の付与は必要ない
+  + SQS
+    + triggerとして
+    + 送信先として
