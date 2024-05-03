@@ -1,5 +1,9 @@
-variable "services" {
+variable "identifiers" {
   type = list(string)
+}
+
+variable "principal_type" {
+  type = string
 }
 
 # リソースベースのポリシーは、アタッチされているリソースに適用されるためResourceが必要ない代わりに、適用対象をPrincipalで指定します。
@@ -12,8 +16,8 @@ data "aws_iam_policy_document" "assume_role_policy" {
     # https://dev.classmethod.jp/articles/trustpolicy-wildcard-check/
     principals {
       # AWS(account, role, user), Service(AWS service), Federated, CanonicalUser and *.
-      type        = "Service"
-      identifiers = var.services
+      type        = var.principal_type
+      identifiers = var.identifiers
     }
   }
 }
