@@ -17,7 +17,7 @@ resource "aws_iam_role" "example" {
 
 # delegate to services
 module "assume_role_policy" {
-  source = "./assume_role_policy/service"
+  source = "./assume_role_policy/"
   services = var.services
 }
 
