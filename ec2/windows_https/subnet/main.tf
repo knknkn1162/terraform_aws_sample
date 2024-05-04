@@ -9,6 +9,24 @@ resource "aws_subnet" "example" {
   cidr_block = var.cidr
 }
 
+module "register_subnets" {
+  source = "../rt2subnets"
+  vpc_id = var.vpc_id
+  subnet_ids = [
+    aws_subnet.example.id
+  ]
+}
+
+module "igw" {
+  source = "../rt2subnets/route/igw"
+  route_table_id = module.register_subnets.rt_id
+  vpc_id = var.vpc_id
+}
+
 output "id" {
   value = aws_subnet.example.id
+}
+
+output "rt_id" {
+  value = module.register_subnets.rt_id
 }

@@ -1,5 +1,5 @@
 locals {
-  filepath = "${path.module}/assets/sample.pfx"
+  filepath = "${path.module}/ec2/assets/certs/sample.pfx"
   filename = "sample.pfx"
   website_name = "Default Web Site"
 }
@@ -8,38 +8,20 @@ data "local_file" "pfx" {
   filename = local.filepath
 }
 
-resource "aws_security_group" "example" {
-  vpc_id      = module.vpc.id
+
+module "ami4ec2" {
+  source = "./ec2/ami/windows_server"
+  lang = "Japanese"
+  ver = 2022
 }
 
-
-module "egress" {
-  source = "./security_group/egress/all"
-  security_group_id = aws_security_group.example.id
-  is_any_cidr = true
-}
-
-
-module "ingress" {
-  source = "./security_group/ingress"
-  security_group_id = aws_security_group.example.id
-  is_any_cidr = true
-  ports = [443, 3389]
-}
-
-# we don't have to use aws_eip_association because it's already associated with vm
-resource "aws_eip" "example" {
-  instance = module.vm.id
-  domain   = "vpc"
-}
-
-module "vm" {
+module "ec2" {
   source = "./ec2"
-  vpc_id = module.vpc.id
-  vm_subnet_id = module.subnet4public.id
-  vm_spec = var.vm_spec
-  vm_cidr = var.public_cidr
-  security_group_ids = [aws_security_group.example.id]
+  ami = module.ami4ec2.id
+  subnet_id = module.subnet4public.id
+  vm_spec = var.ec2_spec
+  sg_ids = [module.sg.id]
+  enable_ssm = var.enable_ec2_ssm
   user_data = <<-EOF
 cd ("{0}/documents" -f $env:PUBLIC)
 # import pfx
@@ -51,11 +33,10 @@ Import-module servermanager
 Add-WindowsFeature Web-Server -IncludeManagementTools -IncludeAllSubFeature
 Import-Module WebAdministration
 # bind pfx <-> var.dns_prefix.domain
-New-WebBinding -Name "${local.website_name}" -IP "*" -Port 443 -HostHeader "${var.prefix_domain}.${var.root_domain}" -Protocol https
+New-WebBinding -Name "${local.website_name}" -IP "*" -Port 443 -HostHeader "${local.domain}" -Protocol https
 (Get-WebBinding -Name "${local.website_name}" -Protocol https).AddSslCertificate($cert.GetCertHashString(),"my")
 EOF
 }
-
 
 module "register_a_record" {
   source = "./dns_a_record"
