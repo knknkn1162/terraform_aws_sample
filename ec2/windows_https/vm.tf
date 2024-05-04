@@ -34,7 +34,7 @@ resource "aws_eip" "example" {
 }
 
 module "vm" {
-  source = "./vm"
+  source = "./ec2"
   vpc_id = module.vpc.id
   vm_subnet_id = module.subnet4public.id
   vm_spec = var.vm_spec
