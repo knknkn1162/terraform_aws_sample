@@ -11,6 +11,6 @@ output "ssh_privkey" {
   sensitive = true
 }
 
-output "user" {
-  value = "vyos@${module.vyos.public_ip}"
+output "ssh" {
+  value = "ssh -i priv.pem ${module.vyos.user}@${module.vyos.public_ip}"
 }

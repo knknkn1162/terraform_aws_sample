@@ -2,10 +2,6 @@ variable "vpc_id" {
   type = string
 }
 
-variable "target_cidr" {
-  type = string
-}
-
 resource "aws_security_group" "example" {
   vpc_id      = var.vpc_id
 }
@@ -13,7 +9,7 @@ resource "aws_security_group" "example" {
 module "ingress" {
   source = "./ingress"
   security_group_id = aws_security_group.example.id
-  cidr_ipv4 = var.target_cidr
+  is_any_cidr = true
   ports = [22]
 }
 

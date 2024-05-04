@@ -78,7 +78,7 @@ set vpn ipsec ike-group AWS dead-peer-detection timeout '30'
 #!
 #!  The tunnel interface is configured with the internal IP address.
 
-set interfaces vti vti0 address '${tunnel1_cgw_inside_cidr}'
+set interfaces vti vti0 address '${tunnel1_cgw_inside_address}/30'
 set interfaces vti vti0 description 'VPC tunnel 1'
 set interfaces vti vti0 mtu '1436'
 
@@ -151,7 +151,7 @@ set vpn ipsec site-to-site peer ${tunnel2_address} vti esp-group 'AWS'
 #!
 #!  The tunnel interface is configured with the internal IP address.
 
-set interfaces vti vti1 address '${tunnel2_cgw_inside_cidr}'
+set interfaces vti vti1 address '${tunnel2_cgw_inside_address}/30'
 set interfaces vti vti1 description 'VPC tunnel 2'
 set interfaces vti vti1 mtu '1436'
 

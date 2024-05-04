@@ -11,6 +11,7 @@ module "subnet4vpc2public" {
   cidr = var.public2_cidr
 }
 
+
 module "route_vgw" {
   source = "./rt2subnets/route/vgw"
   vgw_id = module.vpn.vpn_gateway_id
