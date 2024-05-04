@@ -8,14 +8,8 @@ module "vpc2" {
   cidr = var.vpc2_cidr
 }
 
-# main
-module "vpn_gateway" {
-  source = "./vpn_gateway"
+module "vpn" {
+  source = "./vpn"
   vpc_id = module.vpc1.id
-}
-
-# peer
-module "customer_gateway" {
-  source = "./customer_gateway"
-  public_ip = module.vyos.public_ip
+  cgw_public_ip = module.vyos.public_ip
 }
