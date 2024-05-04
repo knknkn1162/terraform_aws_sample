@@ -10,3 +10,16 @@ module "subnet4vpc2public" {
   vpc_id = module.vpc2.id
   cidr = var.public2_cidr
 }
+
+module "route_vgw" {
+  source = "./rt2subnets/route/vgw"
+  vgw_id = module.vpn.vpn_gateway_id
+  rt_id = module.subnet4vpc1public.rt_id
+}
+
+module "route_cgw" {
+  source = "./rt2subnets/route/cgw"
+  rt_id = module.subnet4vpc2public.rt_id
+  nic_id = module.vyos.nic_id
+  vpc_cidr = module.vpc1.cidr
+}

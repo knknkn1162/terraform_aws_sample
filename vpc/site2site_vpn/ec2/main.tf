@@ -18,6 +18,8 @@ resource "aws_instance" "example" {
   vpc_security_group_ids = var.sg_ids
   associate_public_ip_address = true
   key_name = module.key.key
+  # Controls if traffic is routed to the instance when the destination address does not match the instance
+  source_dest_check = false
 }
 
 # create instance profile
@@ -35,4 +37,8 @@ resource "aws_iam_instance_profile" "bastion_profile" {
 
 output "ssh_privkey" {
   value = module.key.pem
+}
+
+output "nic_id" {
+  value = aws_instance.example.primary_network_interface_id
 }

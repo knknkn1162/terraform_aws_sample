@@ -26,3 +26,11 @@ resource "aws_vpn_connection" "example" {
   # default to false
   #static_routes_only  = false
 }
+
+output "vpn_gateway_id" {
+  value = module.vpn_gateway.id
+}
+
+output "customer_gateway_id" {
+  value = module.customer_gateway.id
+}
