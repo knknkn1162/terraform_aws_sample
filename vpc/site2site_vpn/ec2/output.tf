@@ -9,3 +9,7 @@ output "public_ip" {
 output "id" {
   value = aws_instance.example.id
 }
+
+output "user" {
+  value = "vyos"
+}

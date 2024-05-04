@@ -26,8 +26,12 @@ variable "peer_vpc_cidr" {
   type = string
 }
 
-locals {
-  vyos_conf = templatefile("${path.module}/conf/vyos.conf.tftpl", {
+variable "filepath" {
+  type = string
+}
+
+resource "local_file" "example" {
+  content  = templatefile("${path.module}/conf/vyos.conf.tftpl", {
     tunnel1_address = var.tunnel1_ip.tunnel,
     tunnel1_cgw_inside_cidr = var.tunnel1_ip.cgw_cidr,
     tunnel1_vgw_inside_address = var.tunnel1_ip.vgw,
@@ -37,8 +41,9 @@ locals {
     vyos_private_ip = var.vyos_private_ip,
     peer_vpc_cidr = var.peer_vpc_cidr
   })
+  filename = var.filepath
 }
 
-output "conf" {
-  value = local.vyos_conf
+output "id" {
+  value = local_file.example.id
 }

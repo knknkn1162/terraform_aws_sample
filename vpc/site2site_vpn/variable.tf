@@ -15,3 +15,8 @@ variable "public2_cidr" {
 variable "ec2_spec" {
   type = string
 }
+
+locals {
+  local_filepath = "${path.module}/vyos.conf"
+  remote_filepath = "/tmp/vyos.conf"
+}

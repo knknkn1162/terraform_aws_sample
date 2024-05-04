@@ -19,5 +19,29 @@ module "conf" {
   }
   vyos_private_ip = module.vyos.private_ip
   peer_vpc_cidr = module.vpc2.cidr
+  filepath = local.local_filepath
 }
 
+
+resource "null_resource" "settings" {
+  triggers = {
+    endpoint = module.conf.id
+  }
+  connection {
+    type        = "ssh"
+    host        = module.vyos.public_ip
+    user        = module.vyos.user
+    private_key = module.vyos.ssh_privkey
+  }
+  provisioner "file" {
+    source      = local.local_filepath
+    destination = local.remote_filepath
+  }
+  provisioner "remote-exec" {
+    # see https://developer.hashicorp.com/terraform/language/resources/provisioners/remote-exec
+    inline = [
+      "chmod +x ${local.remote_filepath}",
+      "${local.remote_filepath}",
+    ]
+  }
+}
