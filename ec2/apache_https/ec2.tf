@@ -8,7 +8,7 @@ module "ec2" {
   subnet_id = module.subnet4public.id
   vm_spec = var.ec2_spec
   sg_ids = [module.sg.id]
-  domain = "${var.prefix_domain}.${var.root_domain}"
+  domain = local.domain
 }
 
 module "register_a_record" {

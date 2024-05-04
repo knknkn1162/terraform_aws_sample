@@ -15,3 +15,7 @@ variable "root_domain" {
 variable "prefix_domain" {
   type = string
 }
+
+locals {
+  domain = "${var.prefix_domain}.${var.root_domain}"
+}

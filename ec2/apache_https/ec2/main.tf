@@ -12,14 +12,8 @@ variable "sg_ids" {
 
 locals {
   username = "ec2-user"
-  pem_dir = "/usr/local/ssl/"
-  ssl_conf = templatefile(
-    "${path.module}/assets/conf/ssl.conf.tftpl",
-    {
-      domain = var.domain,
-      pem_dir = local.pem_dir
-    }
-  )
+  pem_dir = "/usr/local/ssl"
+  ssl_conf_path = "/etc/httpd/conf.d/ssl.conf"
 }
 
 module "key" {
@@ -35,7 +29,7 @@ resource "aws_instance" "example" {
   associate_public_ip_address = true
   key_name = module.key.key
   provisioner "file" {
-    source      = "${path.module}/assets/certs/"
+    source      = "${path.module}/assets/"
     destination = "/tmp/"
     connection {
       type = "ssh"
@@ -50,11 +44,8 @@ sudo yum update
 sudo yum -y install httpd mod_ssl
 sudo systemctl enable httpd.service
 sudo mkdir -p ${local.pem_dir}
-sudo mv /tmp/*.pem ${local.pem_dir}
-sudo cat <<-EOT > /etc/httpd/conf.d/ssl.conf
-${local.ssl_conf}
-EOT
-sudo mv /tmp/ssl.conf /etc/httpd/conf.d/ssl.conf
+sudo mv /tmp/certs/*.pem ${local.pem_dir}
+cat /tmp/conf/ssl.conf.template | SSL_DOMAIN=${var.domain} PEM_DIR=${local.pem_dir} envsubst > ${local.ssl_conf_path}
 sudo systemctl start httpd.service
 EOF
 }
