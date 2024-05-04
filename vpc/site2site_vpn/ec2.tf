@@ -7,5 +7,5 @@ module "vyos" {
   ami = module.ami4ec2.ami
   subnet_id = module.subnet4vpc2public.id
   vm_spec = var.ec2_spec
-  sg_ids = [module.sg1.id]
+  sg_ids = [module.sg2.id]
 }

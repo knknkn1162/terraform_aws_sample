@@ -14,7 +14,7 @@ module "ingress" {
   source = "./ingress"
   security_group_id = aws_security_group.example.id
   cidr_ipv4 = var.target_cidr
-  ports = [80,443,22]
+  ports = [22]
 }
 
 
