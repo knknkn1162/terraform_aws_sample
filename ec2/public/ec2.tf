@@ -9,3 +9,9 @@ module "ec2" {
   vm_spec = var.ec2_spec
   sg_ids = [module.sg.id]
 }
+
+resource "local_file" "name" {
+  content = module.ec2.privkey
+  filename = var.privkey_filepath
+  file_permission = "0400"
+}
