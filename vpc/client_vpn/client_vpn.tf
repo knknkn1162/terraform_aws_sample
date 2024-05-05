@@ -18,13 +18,13 @@ module "server_acm" {
 
 module "client_acm" {
   source = "./acm/import"
-  cert_filepath = "${path.module}/assets/client1.domain.tld.crt"
-  privkey_filepath = "${path.module}/assets/client1.domain.tld.key"
+  cert_filepath = local.client_cert_filepath
+  privkey_filepath = local.client_privkey_filepath
   chain_filepath = local.ca_crt_filepath
 }
 
-module "client_vpn" {
-  source = "./client_vpn"
+module "client_vpn_endpoint" {
+  source = "./client_vpn_endpoint"
   cidr = var.client_vpn_endpoint_cidr
   log_group_name = "/aws/cvpn"
   log_stream_name = "sample-${uuid()}"
@@ -34,13 +34,12 @@ module "client_vpn" {
 }
 
 module "gen_conf" {
-  source = "./client_vpn/conf"
-  transport_protocol = module.client_vpn.transport_protocol
-  dns_name = module.client_vpn.dns_name
+  source = "./client_vpn_endpoint/conf"
+  transport_protocol = module.client_vpn_endpoint.transport_protocol
+  dns_name = module.client_vpn_endpoint.dns_name
   ca_crt_filepath = local.ca_crt_filepath
   client_crt_filepath = local.client_cert_filepath
   client_key_filepath = local.client_privkey_filepath
   client_pem_filepath = local.client_pem_filepath
   conf_filepath = var.conf_filepath
-
 }
