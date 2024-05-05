@@ -1,10 +1,10 @@
-module "ami4ec2" {
+module "ami4vyos" {
   source = "./ec2/ami/vyos1.3"
 }
 
 module "vyos" {
   source = "./ec2"
-  ami = module.ami4ec2.ami
+  ami = module.ami4vyos.ami
   subnet_id = module.subnet4vpc2public.id
   vm_spec = var.ec2spec4cgw
   sg_ids = [module.peer_sg4cgw.id]

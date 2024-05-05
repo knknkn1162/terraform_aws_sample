@@ -7,6 +7,6 @@ data "aws_ami" "amzn-linux-2023-ami" {
   }
 }
 
-output "id" {
+output "ami" {
   value = data.aws_ami.amzn-linux-2023-ami.id
 }

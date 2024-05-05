@@ -25,6 +25,10 @@ module "subnet4vpc2private" {
   is_public = false
 }
 
+module "ami4ec2" {
+  source = "./ec2/ami/amzn_linux_2023"
+}
+
 # TODO: test `ping ${module.peer_ec2.private_ip}`
 module "main_ec2" {
   source = "./ec2"
