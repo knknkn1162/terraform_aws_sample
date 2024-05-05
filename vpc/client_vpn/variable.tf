@@ -14,6 +14,10 @@ variable "ec2_spec" {
   type = string
 }
 
-variable "root_domain" {
+variable "client_vpn_endpoint_cidr" {
+  type = string
+}
+
+variable "conf_filepath" {
   type = string
 }

@@ -1,0 +1,24 @@
+client
+dev tun
+proto ${transport_protocol}
+remote ${dns_name} 443
+remote-random-hostname
+resolv-retry infinite
+nobind
+remote-cert-tls server
+cipher AES-256-GCM
+verb 3
+<ca>
+${ca_crt}
+</ca>
+
+
+reneg-sec 0
+
+verify-x509-name server name
+<cert>
+${client_crt}
+</cert>
+<key>
+${client_key}
+</key>

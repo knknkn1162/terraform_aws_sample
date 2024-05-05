@@ -5,7 +5,7 @@ module "subnet4ec2" {
   cidr = var.private1_cidr
 }
 
-module "subnet4vpn_client" {
+module "subnet4client_vpn" {
   source = "./subnet"
   vpc_id = module.vpc.id
   cidr = var.private2_cidr
