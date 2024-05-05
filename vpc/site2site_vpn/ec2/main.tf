@@ -16,6 +16,11 @@ variable "source_dest_check" {
   default = true
 }
 
+variable "allow_policy_arns" {
+  type = list(string)
+  default = []
+}
+
 module "key" {
   source = "./key"
 }
@@ -37,7 +42,7 @@ resource "aws_instance" "example" {
 module "role4ec2" {
   source = "./role4service"
   services = ["ec2.amazonaws.com"]
-  allow_policy_arns = []
+  allow_policy_arns = var.allow_policy_arns
 }
 
 resource "aws_iam_instance_profile" "bastion_profile" {

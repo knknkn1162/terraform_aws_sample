@@ -8,6 +8,10 @@ variable "public1_cidr" {
   type = string
 }
 
+variable "private1_cidr" {
+  type = string
+}
+
 variable "public2_cidr" {
   type = string
 }
@@ -16,7 +20,11 @@ variable "private2_cidr" {
   type = string
 }
 
-variable "ec2_spec" {
+variable "ec2spec4cgw" {
+  type = string
+}
+
+variable "ec2spec4test" {
   type = string
 }
 

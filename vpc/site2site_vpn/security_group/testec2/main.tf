@@ -4,6 +4,7 @@ variable "vpc_id" {
 
 variable "icmp_target_cidr" {
   type = string
+  default = "0.0.0.0/0"
 }
 
 resource "aws_security_group" "example" {

@@ -1,5 +1,6 @@
 # info
 
++ AWS Hands-on for Beginners Network編#2
 + VyOS 1.3.6
 
 ## command

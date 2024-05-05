@@ -6,6 +6,14 @@ module "subnet4vpc1public" {
   is_public = true
 }
 
+
+module "subnet4vpc1private" {
+  source = "./subnet"
+  vpc_id = module.vpc1.id
+  cidr = var.private1_cidr
+  is_public = false
+}
+
 module "subnet4vpc2public" {
   source = "./subnet"
   vpc_id = module.vpc2.id
