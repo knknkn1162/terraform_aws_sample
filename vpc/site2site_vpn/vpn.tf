@@ -17,12 +17,13 @@ module "conf" {
     tunnel_ip = module.vpn.tunnel2_address
     cgw_ip = module.vpn.tunnel2_cgw_inside_address
     vgw_ip = module.vpn.tunnel2_vgw_inside_address
-    pre_shared_secret = module.vpn.tunnel1_pre_shared_secret
+    pre_shared_secret = module.vpn.tunnel2_pre_shared_secret
   }
   vyos_private_ip = module.vyos.private_ip
   peer_vpc_cidr = module.vpc2.cidr
   filepath = local.local_filepath
 }
+
 
 resource "null_resource" "settings" {
   triggers = {
