@@ -17,14 +17,8 @@ resource "aws_instance" "example" {
   subnet_id              = var.subnet_id
   vpc_security_group_ids = var.sg_ids
   associate_public_ip_address = true
-  key_name = module.key.key
+  key_name = module.key.pubkey
 }
-/*
-# for test
-data "aws_iam_policy" "AmazonSSMManagedInstanceCore" {
-  name = "AmazonSSMManagedInstanceCore"
-}
-*/
 
 # create instance profile
 # see https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-instance-profile.html
@@ -32,7 +26,6 @@ module "role4ec2" {
   source = "./role4service"
   services = ["ec2.amazonaws.com"]
   allow_policy_arns = [
-    #data.aws_iam_policy.AmazonSSMManagedInstanceCore.arn
   ]
 }
 

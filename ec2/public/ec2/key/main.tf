@@ -8,10 +8,10 @@ resource "aws_key_pair" "example" {
   public_key = tls_private_key.pk.public_key_openssh
 }
 
-output "pem" {
+output "privkey" {
   value = tls_private_key.pk.private_key_pem
 }
 
-output "key" {
+output "pubkey" {
   value = aws_key_pair.example.key_name
 }
