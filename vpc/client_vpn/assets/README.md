@@ -1,4 +1,5 @@
 ```sh
+% mkdir tmp
 % git clone https://github.com/OpenVPN/easy-rsa.git
 % cd easy-rsa/easyrsa3 
 % ./easyrsa init-pki

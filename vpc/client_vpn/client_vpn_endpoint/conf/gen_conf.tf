@@ -26,6 +26,10 @@ variable "conf_filepath" {
   type = string
 }
 
+locals {
+  conf_tmp_filepath = "tmp_${var.conf_filepath}"
+}
+
 resource "local_file" "example" {
   content  = templatefile("${path.module}/client_config.ovpn.tftpl", {
     transport_protocol = var.transport_protocol,
@@ -34,5 +38,17 @@ resource "local_file" "example" {
     client_crt = file(var.client_pem_filepath)
     client_key = file(var.client_key_filepath)
   })
-  filename = var.conf_filepath
+  filename = local.conf_tmp_filepath
+}
+
+resource "null_resource" "post_script" {
+  triggers = {
+    ref = local_file.example.id
+  }
+
+  provisioner "local-exec" {
+    command = <<-EOF
+cat ${local.conf_tmp_filepath} | grep -v '^$' > ${var.conf_filepath}
+EOF
+  }
 }
