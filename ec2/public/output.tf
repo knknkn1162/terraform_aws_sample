@@ -4,5 +4,5 @@ output "privkey" {
 }
 
 output "ssh" {
-  value = "ssh -i ${var.privkey_filepath} ec2-user@${module.ec2.private_ip}"
+  value = "ssh -i ${var.privkey_filepath} ec2-user@${module.ec2.public_ip}"
 }
