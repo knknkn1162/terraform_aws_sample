@@ -14,3 +14,7 @@ output "ssh_privkey" {
 output "ssh" {
   value = "ssh -i priv.pem ${module.vyos.user}@${module.vyos.public_ip}"
 }
+
+output "peerec2_private_ip" {
+  value = module.peer_ec2.private_ip
+}

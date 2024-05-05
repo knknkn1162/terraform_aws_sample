@@ -12,21 +12,3 @@ module "vyos" {
   # necessary for VPN
   source_dest_check = false
 }
-
-module "main_ec2" {
-  source = "./ec2"
-  ami = module.ami4ec2.ami
-  subnet_id = module.subnet4vpc1private.id
-  vm_spec = var.ec2spec4test
-  sg_ids = [module.main_sg4testec2.id]
-  allow_policy_arns = [
-    "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-  ]
-}
-module "peer_ec2" {
-  source = "./ec2"
-  ami = module.ami4ec2.ami
-  subnet_id = module.subnet4vpc2private.id
-  vm_spec = var.ec2spec4test
-  sg_ids = [module.peer_sg4testec2.id]
-}
