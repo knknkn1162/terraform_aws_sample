@@ -12,6 +12,10 @@ variable "public2_cidr" {
   type = string
 }
 
+variable "private2_cidr" {
+  type = string
+}
+
 variable "ec2_spec" {
   type = string
 }

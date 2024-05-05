@@ -4,7 +4,7 @@ variable "security_group_id" {
 
 variable "cidr_ipv4" {
   type = string
-  default = ""
+  default = "0.0.0.0/0"
 }
 
 resource "aws_vpc_security_group_ingress_rule" "example" {

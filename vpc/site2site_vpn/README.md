@@ -7,6 +7,7 @@
 ```sh
 show vpn ike sa
 show vpn ipsec sa
+show ip route
 show ip bgp
 show ip route
 ```

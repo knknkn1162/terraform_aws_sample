@@ -1,10 +1,11 @@
-# peering test
-module "sg1" {
-  source = "./security_group"
-  vpc_id = module.vpc1.id
+# cgw
+module "sg2cgw" {
+  source = "./security_group/cgw"
+  vpc_id = module.vpc2.id
 }
 
-module "sg2" {
-  source = "./security_group"
+module "sg2testec2" {
+  source = "./security_group/testec2"
   vpc_id = module.vpc2.id
+  icmp_target_cidr = module.vpc1.cidr
 }

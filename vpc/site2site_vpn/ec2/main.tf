@@ -6,6 +6,16 @@ variable "sg_ids" {
   type = list(string)
 }
 
+variable "associate_public_ip_address" {
+  type = bool
+  default = false
+}
+
+variable "source_dest_check" {
+  type = bool
+  default = true
+}
+
 module "key" {
   source = "./key"
 }
@@ -16,10 +26,10 @@ resource "aws_instance" "example" {
   iam_instance_profile   = aws_iam_instance_profile.bastion_profile.name
   subnet_id              = var.subnet_id
   vpc_security_group_ids = var.sg_ids
-  associate_public_ip_address = true
+  associate_public_ip_address = var.associate_public_ip_address
   key_name = module.key.key
   # Controls if traffic is routed to the instance when the destination address does not match the instance
-  source_dest_check = false
+  source_dest_check = var.source_dest_check
 }
 
 # create instance profile
