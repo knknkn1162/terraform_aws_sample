@@ -7,15 +7,17 @@ module "vpn" {
 
 module "conf" {
   source = "./ec2/settings"
-  tunnel1_ip = {
-    tunnel = module.vpn.tunnel1_address
-    cgw = module.vpn.tunnel1_cgw_inside_address
-    vgw = module.vpn.tunnel1_vgw_inside_address
+  tunnel1 = {
+    tunnel_ip = module.vpn.tunnel1_address
+    cgw_ip = module.vpn.tunnel1_cgw_inside_address
+    vgw_ip = module.vpn.tunnel1_vgw_inside_address
+    pre_shared_secret = module.vpn.tunnel1_pre_shared_secret
   }
-  tunnel2_ip = {
-    tunnel = module.vpn.tunnel2_address
-    cgw = module.vpn.tunnel2_cgw_inside_address
-    vgw = module.vpn.tunnel2_vgw_inside_address
+  tunnel2 = {
+    tunnel_ip = module.vpn.tunnel2_address
+    cgw_ip = module.vpn.tunnel2_cgw_inside_address
+    vgw_ip = module.vpn.tunnel2_vgw_inside_address
+    pre_shared_secret = module.vpn.tunnel1_pre_shared_secret
   }
   vyos_private_ip = module.vyos.private_ip
   peer_vpc_cidr = module.vpc2.cidr

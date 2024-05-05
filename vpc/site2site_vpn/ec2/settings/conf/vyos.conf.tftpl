@@ -41,7 +41,7 @@ set vpn ipsec ike-group AWS proposal 1 dh-group '2'
 set vpn ipsec ike-group AWS proposal 1 encryption 'aes128'
 set vpn ipsec ike-group AWS proposal 1 hash 'sha1'
 set vpn ipsec site-to-site peer ${tunnel1_address} authentication mode 'pre-shared-secret'
-set vpn ipsec site-to-site peer ${tunnel1_address} authentication pre-shared-secret 'U1KiF6U_F8LslUW6XVhPWKegdFuBH3xU'
+set vpn ipsec site-to-site peer ${tunnel1_address} authentication pre-shared-secret ${tunnel1_pre_shared_secret}
 set vpn ipsec site-to-site peer ${tunnel1_address} description 'VPC tunnel 1'
 set vpn ipsec site-to-site peer ${tunnel1_address} ike-group 'AWS'
 set vpn ipsec site-to-site peer ${tunnel1_address} local-address '${vyos_private_ip}'
@@ -135,7 +135,7 @@ set protocols bgp 65000 address-family ipv4-unicast network ${peer_vpc_cidr}
 #! set vpn ipsec ike-group AWS proposal 1 encryption 'aes128'
 #! set vpn ipsec ike-group AWS proposal 1 hash 'sha1'
 set vpn ipsec site-to-site peer ${tunnel2_address} authentication mode 'pre-shared-secret'
-set vpn ipsec site-to-site peer ${tunnel2_address} authentication pre-shared-secret 'qevNshl.Cz2Y5QU3A7vuPJ_LCYZtEDsR'
+set vpn ipsec site-to-site peer ${tunnel2_address} authentication pre-shared-secret ${tunnel2_pre_shared_secret}
 set vpn ipsec site-to-site peer ${tunnel2_address} description 'VPC tunnel 2'
 set vpn ipsec site-to-site peer ${tunnel2_address} ike-group 'AWS'
 set vpn ipsec site-to-site peer ${tunnel2_address} local-address '${vyos_private_ip}'
@@ -193,4 +193,5 @@ set protocols bgp 65000 neighbor ${tunnel2_vgw_inside_address} timers keepalive 
 #!  - Amazon Virtual Private Cloud Network Administrator Guide:
 #!       http://docs.amazonwebservices.com/AmazonVPC/latest/NetworkAdminGuide
 commit
+save
 exit
