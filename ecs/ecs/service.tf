@@ -16,6 +16,7 @@ resource "aws_ecs_task_definition" "example" {
   execution_role_arn = aws_iam_role.example.arn
   # see https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html
   # awslogs: https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/using_awslogs.html
+  # -> you can check cluster > task > > log tab
   container_definitions    = <<TASKDEF
 [
   {
@@ -52,7 +53,7 @@ resource "aws_ecs_service" "example" {
   launch_type = local.launch_type
   cluster         = aws_ecs_cluster.example.id
   task_definition = aws_ecs_task_definition.example.arn
-  # defaults to LATEST
+  # defaults to LATEST=1.4.0
   # platform_version = "LATEST"
 
   # Number of instances of the task definition to place and keep running.
