@@ -3,7 +3,7 @@ locals {
 }
 
 module "userinfo" {
-  source = "./userinfo"
+  source = "../userinfo"
 }
 
 resource "null_resource" "run_script" {

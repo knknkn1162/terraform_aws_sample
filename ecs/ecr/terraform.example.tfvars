@@ -1,2 +1,2 @@
-repo="test/sample"
+ecr_repo="test/sample"
 original_repo="httpd"
