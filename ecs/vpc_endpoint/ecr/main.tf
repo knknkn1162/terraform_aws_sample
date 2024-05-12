@@ -26,6 +26,9 @@ resource "aws_vpc_endpoint" "ecr_dkr" {
   subnet_ids = var.subnet_ids
   vpc_id = var.vpc_id
   security_group_ids = [var.sg_id]
+  # . To do this, ensure that the Enable Private DNS Name option is selected in the Amazon VPC console when you create the VPC endpoint.
+  # https://stackoverflow.com/a/73903596
+  private_dns_enabled = true
 }
 
 resource "aws_vpc_endpoint" "ecr_api" {
@@ -34,4 +37,7 @@ resource "aws_vpc_endpoint" "ecr_api" {
   subnet_ids = var.subnet_ids
   vpc_id = var.vpc_id
   security_group_ids = [var.sg_id]
+  # When this endpoint is created, you have the option to enable a private DNS hostname. Enable this setting by selecting Enable Private DNS Name in the VPC console when you create the VPC endpoint.
+  # https://stackoverflow.com/a/73903596
+  private_dns_enabled = true
 }
