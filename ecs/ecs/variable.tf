@@ -1,4 +1,4 @@
-variable "ecr_image" {
+variable "ecr_repo_url" {
   type = string
 }
 
@@ -11,5 +11,9 @@ variable "subnet_ids" {
 }
 
 variable "sg_id" {
+  type = string
+}
+
+variable "cnt" {
   type = string
 }

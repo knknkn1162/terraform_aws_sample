@@ -15,18 +15,13 @@ variable "public2_cidr" {
   type = string
 }
 
-variable "ec2_spec" {
+variable "private1_cidr" {
+  type = string
+}
+variable "private2_cidr" {
   type = string
 }
 
-variable "root_domain" {
-  type = string
-}
-
-variable "prefix_domain" {
-  type = string
-}
-
-locals {
-  domain = "${var.prefix_domain}.${var.root_domain}"
+variable "container_cnt" {
+  type = number
 }

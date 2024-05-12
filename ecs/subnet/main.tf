@@ -5,9 +5,14 @@ variable "cidr" {
   type = string
 }
 
+variable "az_id" {
+  
+}
+
 resource "aws_subnet" "example" {
   vpc_id     = var.vpc_id
   cidr_block = var.cidr
+  availability_zone_id = var.az_id
 }
 
 resource "aws_route_table" "example" {

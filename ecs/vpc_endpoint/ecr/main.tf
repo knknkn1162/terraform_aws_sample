@@ -6,8 +6,8 @@ variable "vpc_id" {
   type = string
 }
 
-variable "sg_ids" {
-  type = list(string)
+variable "sg_id" {
+  type = string
 }
 
 
@@ -25,7 +25,7 @@ resource "aws_vpc_endpoint" "ecr_dkr" {
   service_name = local.ecr_dkr_service_name
   subnet_ids = var.subnet_ids
   vpc_id = var.vpc_id
-  security_group_ids = var.sg_ids
+  security_group_ids = [var.sg_id]
 }
 
 resource "aws_vpc_endpoint" "ecr_api" {
@@ -33,5 +33,5 @@ resource "aws_vpc_endpoint" "ecr_api" {
   service_name = local.ecr_api_service_name
   subnet_ids = var.subnet_ids
   vpc_id = var.vpc_id
-  security_group_ids = var.sg_ids
+  security_group_ids = [var.sg_id]
 }
