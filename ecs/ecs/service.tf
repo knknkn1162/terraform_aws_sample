@@ -22,8 +22,8 @@ resource "aws_ecs_task_definition" "example" {
   {
     "portMappings": [
       {
-        "containerPort": 80, 
-        "hostPort": 80, 
+        "containerPort": ${container_port},
+        "hostPort": ${host_port},
         "protocol": "tcp"
       }
     ],

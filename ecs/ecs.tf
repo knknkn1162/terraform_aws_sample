@@ -39,4 +39,6 @@ module "ecs" {
     module.subnet4private2.id
   ]
   cnt = var.container_cnt
+  container_port = 80
+  host_port = 80
 }

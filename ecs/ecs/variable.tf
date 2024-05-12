@@ -17,3 +17,11 @@ variable "sg_id" {
 variable "cnt" {
   type = string
 }
+
+variable "container_port" {
+  type = string
+}
+
+variable "host_port" {
+  type = string
+}
