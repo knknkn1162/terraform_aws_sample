@@ -5,6 +5,16 @@ module "alb" {
   sg_id = module.sg4public.id
 }
 
+# necessary when pull from ecr
+module "vpc_endpoint_s3" {
+  source = "./vpc_endpoint/s3"
+  vpc_id = module.vpc.id
+  rt_ids = [
+    module.subnet4private1.rt_id,
+    module.subnet4private2.rt_id
+  ]
+}
+
 module "vpc_endpoint_ecr" {
   source = "./vpc_endpoint/ecr"
   vpc_id = module.vpc.id

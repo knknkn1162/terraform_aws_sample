@@ -1,19 +1,19 @@
-data "aws_iam_role" "ecsTaskExecutionRole" {
-  name = "ecsTaskExecutionRole"
-}
-
 locals {
   container_name = "container-${uuid()}"
   launch_type = "FARGATE"
+}
+
+resource "aws_cloudwatch_log_group" "example" {
 }
 
 resource "aws_ecs_task_definition" "example" {
   family                   = "td-${uuid()}"
   requires_compatibilities = [local.launch_type]
   network_mode             = "awsvpc"
+  // MB
   cpu                      = 1024
   memory                   = 2048
-  execution_role_arn = data.aws_iam_role.ecsTaskExecutionRole.arn
+  execution_role_arn = aws_iam_role.example.arn
   # see https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html
   # awslogs: https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/using_awslogs.html
   container_definitions    = <<TASKDEF
@@ -31,11 +31,11 @@ resource "aws_ecs_task_definition" "example" {
       "options": {
         "awslogs-group": "${aws_cloudwatch_log_group.example.name}",
         "awslogs-region": "ap-northeast-1",
-        "awslogs-stream-prefix": "${aws_cloudwatch_log_stream.example.name}"
+        "awslogs-stream-prefix": "ecs"
       }
     },
     "name": "${local.container_name}",
-    "image": "${var.ecr_repo_url}",
+    "image": "${var.ecr_repo_url}:latest",
     "essential": true
   }
 ]
