@@ -1,2 +1,0 @@
-variable "source_conf" {
-}

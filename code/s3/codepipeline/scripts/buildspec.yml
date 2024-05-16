@@ -1,0 +1,14 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo "pre_build"
+  build:
+    commands:
+      - echo "build"
+  post_build:
+    commands:
+      - ls -lsah . > build.txt
+artifacts:
+  files:
+      - build.txt

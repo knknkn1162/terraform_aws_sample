@@ -1,4 +1,26 @@
-data "aws_iam_policy_document" "codepipeline_policy" {
+module "pipeline" {
+  source = "./pipeline"
+  pipeline_policy_json = data.aws_iam_policy_document.example.json
+  artifact_s3 = aws_s3_bucket.artifact.bucket
+  source_conf = {
+    S3Bucket    = module.source.name
+    S3ObjectKey = var.source_s3_key
+    PollForSourceChanges = true
+  }
+  build_conf = {
+    ProjectName = module.build.name
+  }
+
+  deploy_conf = {
+    BucketName = module.deploy.name
+    Extract = true
+  }
+  depends_on = [
+    null_resource.upload_source_s3
+  ]
+}
+
+data "aws_iam_policy_document" "example" {
   statement {
     sid    = ""
     effect = "Allow"
@@ -47,17 +69,4 @@ data "aws_iam_policy_document" "codepipeline_policy" {
 
     resources = ["*"]
   }
-}
-
-resource "aws_iam_policy" "example" {
-  name = "iam-policy-${uuid()}"
-  policy = data.aws_iam_policy_document.codepipeline_policy.json
-}
-
-module "role4pipeline" {
-  source = "../../role4service"
-  services = ["codepipeline.amazonaws.com"]
-  allow_policy_arns = [
-    aws_iam_policy.default.example
-  ]
 }

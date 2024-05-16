@@ -1,3 +1,0 @@
-variable "repo" {
-  type = string
-}

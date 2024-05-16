@@ -3,7 +3,7 @@ resource "aws_codepipeline" "codepipeline" {
   role_arn = module.role4pipeline.arn
 
   artifact_store {
-    location = var.artifact_sttore_location
+    location = var.artifact_s3
     type     = "S3"
   }
 
@@ -36,9 +36,7 @@ resource "aws_codepipeline" "codepipeline" {
       output_artifacts = ["build"]
       version          = "1"
       # see https://docs.aws.amazon.com/ja_jp/codepipeline/latest/userguide/action-reference-CodeBuild.html
-      configuration = {
-        ProjectName = module.build.name
-      }
+      configuration = var.build_conf
     }
   }
 
@@ -54,10 +52,7 @@ resource "aws_codepipeline" "codepipeline" {
       input_artifacts = ["build"]
 
       # see https://docs.aws.amazon.com/codepipeline/latest/userguide/action-reference-S3.html
-      configuration = {
-        BucketName    = aws_s3_bucket.target.bucket
-        Extract = true
-      }
+      configuration = var.deploy_conf
     }
   }
 }

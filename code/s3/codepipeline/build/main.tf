@@ -7,7 +7,7 @@ variable "image" {
 }
 
 module "role4codebuild" {
-  source = "../../role4service"
+  source = "../role4service"
   services = ["codebuild.amazonaws.com"]
   allow_policy_arns = [
     aws_iam_policy.example.arn
