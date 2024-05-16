@@ -15,7 +15,7 @@ module "role4codebuild" {
 }
 
 
-resource "aws_codebuild_project" "frontend" {
+resource "aws_codebuild_project" "example" {
   name          = "codebuild-${uuid()}"
   service_role  = module.role4codebuild.arn
 
@@ -25,7 +25,9 @@ resource "aws_codebuild_project" "frontend" {
   }
 
   environment {
+    # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html
     compute_type                = var.spec
+    # see https://docs.aws.amazon.com/ja_jp/codebuild/latest/userguide/build-env-ref-available.html
     image                       = var.image
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
@@ -83,4 +85,8 @@ data "aws_iam_policy_document" "codebuild_policy" {
 
     resources = ["*"]
   }
+}
+
+output "name" {
+  value = aws_codebuild_project.example.name
 }
