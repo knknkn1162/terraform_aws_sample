@@ -10,9 +10,9 @@ module "redshift" {
   subnet_ids = [for key,val in module.subnets4db : val.id]
 }
 
-module "subnets4db" {
-  for_each = local.db_cidr_map
-  source = "./subnet"
-  cidr = each.value
+/*
+module "sg4redshift" {
+  source = "./security_group"
   vpc_id = module.vpc.id
 }
+*/

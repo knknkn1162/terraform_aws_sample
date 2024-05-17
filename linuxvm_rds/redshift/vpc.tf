@@ -9,8 +9,18 @@ module "subnet4public" {
   cidr = var.public_cidr
 }
 
-module "igw4rt4public" {
+module "subnets4db" {
+  for_each = local.db_cidr_map
+  source = "./subnet"
+  cidr = each.value
+  vpc_id = module.vpc.id
+}
+
+module "igw" {
   source = "./subnet/route/igw"
   vpc_id = module.vpc.id
-  route_table_id = module.subnet4public.rt_id
+  rt_ids = concat(
+    #[for k, v in module.subnets4db: v.rt_id],
+    [module.subnet4public.rt_id],
+  )
 }

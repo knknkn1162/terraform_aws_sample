@@ -2,8 +2,12 @@ variable "vpc_id" {
   type = string
 }
 
-variable "route_table_id" {
-  type = string
+variable "rt_ids" {
+  type = list(string)
+}
+
+locals {
+  rt_id_map = {for k, v in var.rt_ids : k => v}
 }
 
 resource "aws_internet_gateway" "igw" {
@@ -11,7 +15,8 @@ resource "aws_internet_gateway" "igw" {
 }
 
 resource "aws_route" "route" {
-  route_table_id            = var.route_table_id
+  for_each = local.rt_id_map
+  route_table_id            = each.value
   destination_cidr_block    = "0.0.0.0/0"
   gateway_id = aws_internet_gateway.igw.id
 }
